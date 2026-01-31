@@ -9,7 +9,7 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
     return (
         <>
             {/* Top Navigation Bar */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex gap-4 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border px-6 py-2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-2xl flex gap-4 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border px-6 py-2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-x-auto whitespace-nowrap scrollbar-hide">
                 <button onClick={() => onNavigate('home')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors">ROOT</button>
                 <span className="text-blue-800">|</span>
                 <button onClick={() => onNavigate('experience')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors">EXPERIENCE</button>
@@ -21,8 +21,8 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
                 <button onClick={() => onNavigate('skills')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors">SKILLS</button>
             </div>
 
-            {/* Legend / Info Box */}
-            <div className="absolute bottom-4 left-4 z-10 p-4 max-w-sm">
+            {/* Legend / Info Box - Hidden on mobile */}
+            <div className="hidden md:block absolute bottom-4 left-4 z-10 p-4 max-w-sm">
                 <div className="flex items-center gap-2 mb-2 border-b border-blueprint-border pb-1">
                     <Info size={16} className="text-blueprint-text" />
                     <span className="text-xs font-bold text-blueprint-text uppercase">Network Legend</span>

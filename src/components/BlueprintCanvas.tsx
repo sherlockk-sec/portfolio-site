@@ -339,10 +339,17 @@ const BlueprintCanvas: React.FC = () => {
         }
     };
 
-    // Initial View: Center on Main Node (0,0) with slight zoom
+    // Initial View: Adaptive Zoom based on device
     React.useEffect(() => {
         setTimeout(() => {
-            setCenter(0, 0, { zoom: 1.1, duration: 1000 });
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                // Mobile: Zoom out to show context, center slightly lower
+                setCenter(0, 200, { zoom: 0.6, duration: 1000 });
+            } else {
+                // Desktop: Immersive close-up
+                setCenter(0, 0, { zoom: 1.1, duration: 1000 });
+            }
         }, 100);
     }, [setCenter]);
 

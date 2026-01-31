@@ -72,7 +72,7 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
             <div
-                className="bg-blueprint-bg border border-blueprint-border w-full max-w-2xl shadow-[0_0_20px_rgba(59,130,246,0.5)] modal-animate m-4 flex flex-col max-h-[80vh]"
+                className="bg-blueprint-bg border border-blueprint-border w-full max-w-2xl shadow-[0_0_20px_rgba(59,130,246,0.5)] modal-animate m-2 md:m-4 flex flex-col max-h-[85vh]"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
@@ -100,7 +100,7 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
                 </div>
 
                 {/* Content */}
-                <div className="p-6 font-mono text-sm overflow-y-auto flex-1">
+                <div className="p-4 md:p-6 font-mono text-sm overflow-y-auto flex-1">
                     {displayedContent.map((line, i) => (
                         <div key={i} className="mb-2 text-green-400 break-words">
                             <span className="text-blue-400 mr-2">$</span>
