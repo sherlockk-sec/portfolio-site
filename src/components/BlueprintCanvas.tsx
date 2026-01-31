@@ -370,7 +370,7 @@ const BlueprintCanvas: React.FC = () => {
                 defaultEdgeOptions={{ type: 'data' }}
                 connectionLineStyle={{ stroke: '#64ffda' }}
                 onNodeClick={onNodeClick}
-                minZoom={0.5}
+                minZoom={0.1}
                 maxZoom={2}
                 nodesDraggable={!isLocked}
             >
@@ -381,7 +381,7 @@ const BlueprintCanvas: React.FC = () => {
                     variant={BackgroundVariant.Lines}
                     className="opacity-20"
                 />
-                <Controls position="bottom-right" showInteractive={false} className="!bg-blueprint-bg !border-blueprint-border">
+                <Controls position="bottom-right" showInteractive={false} className="!bg-blueprint-bg !border-blueprint-border !mb-14 !mr-2">
                     <ControlButton onClick={() => setIsLocked(!isLocked)} title={isLocked ? "Unlock Layout" : "Lock Layout"}>
                         {isLocked ? <Lock size={14} /> : <Unlock size={14} />}
                     </ControlButton>
