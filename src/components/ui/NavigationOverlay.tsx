@@ -21,20 +21,19 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
                 <button onClick={() => onNavigate('skills')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">SKILLS</button>
             </div>
 
-            {/* Gambit Quote - Hidden on mobile */}
-            {/* Moved to top-left to avoid overlapping bottom nodes (VAPT/Skills) */}
-            <div className="!hidden md:!block absolute top-24 left-8 z-10 p-5 max-w-md bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-                <div className="flex items-center gap-2 mb-3 border-b border-blueprint-border/50 pb-2">
-                    <Info size={16} className="text-blueprint-text" />
-                    <span className="text-sm font-bold text-blueprint-text tracking-wider uppercase">THE GAMBIT</span>
+            {/* Gambit Quote - Compact Version */}
+            <div className="!hidden md:!block absolute bottom-6 left-6 z-10 p-3 max-w-[280px] bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/40 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+                <div className="flex items-center gap-2 mb-2 border-b border-blueprint-border/30 pb-1">
+                    <Info size={14} className="text-blueprint-text" />
+                    <span className="text-xs font-bold text-blueprint-text tracking-wider uppercase">THE GAMBIT</span>
                 </div>
-                <div className="text-xs text-blue-200 leading-relaxed font-light tracking-wide">
+                <div className="text-[10px] text-blue-200/80 leading-relaxed font-light tracking-wide">
                     "From the outside, it looked like I was throwing away a decade of security for a 'maybe.'
-                    People called it a risk; some even called it reckless. But they missed the underlying math.
-                    <strong className="text-blueprint-text font-bold block my-2 text-sm border-l-2 border-blueprint-text pl-3 py-1 bg-blue-900/20">
+                    ...But they missed the underlying math.
+                    <strong className="text-blueprint-text font-bold block my-1.5 border-l-2 border-blueprint-text pl-2">
                         It wasn’t a gamble, it was a gambit.
                     </strong>
-                    I didn't just hope for a better outcome—I sacrificed a comfortable present to force a more powerful future."
+                    I sacrificed a comfortable present to force a more powerful future."
                 </div>
             </div>
         </>
