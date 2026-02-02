@@ -1,3 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#64ffda">
-  <path d="M78.142,66.788v20.522l-0.899-0.014l-1.035,0.527c-1.115,0.561-11.371,5.472-29.023,5.472c-10.605,0-21.714-1.79-33.018-5.321l-1.938-0.604l-0.159-1.074V66.788c0-9.195,5.198-17.771,13.319-22.105c-0.369-0.587-1.023-1.173-1.953-1.748c-2.477-1.529-2.693-2.922-2.438-3.82c0.404-1.424,2.246-2.273,4.929-2.273c4.089,0,8.681,1.82,12.356,4.885h13.006c3.674-3.064,8.266-4.885,12.355-4.885c2.682,0,4.523,0.85,4.929,2.273c0.255,0.898,0.04,2.291-2.437,3.82c-0.797,0.492-1.391,0.994-1.775,1.5C72.767,48.691,78.142,57.352,78.142,66.788z M72.56,28.192l0.028,2.994c0,0-2.866-2.425-6.606-4.854c0.367-1.568,0.578-3.196,0.578-4.877c0-0.313-0.033-0.617-0.047-0.927c4.521,0.115,7.75-0.882,8.42-2.952c1.177-3.634-5.979-9.21-16.033-12.543C55.17,1.896,50.36,0,45.104,0C33.255,0,23.65,9.605,23.65,21.455c0,5.12,1.8,9.816,4.793,13.504c3.722,0.507,7.626,2.167,10.918,4.705h11.25c3.369-2.6,7.383-4.283,11.186-4.744c1.088-1.347,2.013-2.83,2.754-4.416c1.062,1.176,2.178,2.508,3.344,4.024c10.499,13.667,13.333,5.328,13.333-6.336H72.56z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" class="blueprint-icon">
+  <!-- Style for Neon Effect -->
+  <defs>
+    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sherlock Silhouette Group -->
+  <g stroke="#64ffda" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#neon-glow)">
+    
+    <!-- Deerstalker Hat & Head Profile -->
+    <!-- Start at back neck, go up to hat, brim, ear flap, face, pipe -->
+    <path d="
+      M 35 75                   <!-- Neck Back -->
+      L 35 55                   <!-- Up to Head -->
+      C 25 55, 20 50, 20 45     <!-- Back Brim Curve -->
+      C 20 35, 35 20, 50 20     <!-- Hat Dome Left -->
+      C 65 20, 80 35, 80 45     <!-- Hat Dome Right/Front Brim -->
+      L 70 45                   <!-- Front Brim indent -->
+      L 70 55                   <!-- Forehead/Nose Bridge -->
+      L 75 60                   <!-- Nose Tip -->
+      L 70 62                   <!-- Nose Bottom -->
+      L 70 68                   <!-- Mouth Area -->
+      L 65 75                   <!-- Chin -->
+      L 45 75                   <!-- Jawline to Neck -->
+    "/>
+
+    <!-- Ear Flap (Characteristic of Deerstalker) -->
+    <path d="M 40 45 C 35 55, 45 65, 50 55" fill="none" />
+
+    <!-- The Pipe -->
+    <path d="
+      M 70 68                   <!-- Mouth -->
+      Q 85 75, 85 85            <!-- Stem curving down -->
+      L 95 85                   <!-- Bowl connection -->
+      L 95 75                   <!-- Bowl Top -->
+      L 85 75                   <!-- Bowl Top Inner -->
+    " fill="none" />
+    
+    <!-- Pipe Bowl Detail -->
+    <rect x="85" y="75" width="10" height="10" rx="2" />
+    
+  </g>
 </svg>
