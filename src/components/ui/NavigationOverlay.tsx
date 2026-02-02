@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info, Map } from 'lucide-react';
+import { Info } from 'lucide-react';
 
 interface NavigationOverlayProps {
     onNavigate: (section: string) => void;
@@ -21,24 +21,19 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
                 <button onClick={() => onNavigate('skills')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">SKILLS</button>
             </div>
 
-            {/* Legend / Info Box - Hidden on mobile */}
-            <div className="!hidden md:!block absolute bottom-4 left-4 z-10 p-4 max-w-sm">
-                <div className="flex items-center gap-2 mb-2 border-b border-blueprint-border pb-1">
+            {/* Gambit Quote - Hidden on mobile */}
+            <div className="!hidden md:!block absolute bottom-4 left-4 z-10 p-5 max-w-md bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                <div className="flex items-center gap-2 mb-3 border-b border-blueprint-border/50 pb-2">
                     <Info size={16} className="text-blueprint-text" />
-                    <span className="text-xs font-bold text-blueprint-text uppercase">Network Legend</span>
+                    <span className="text-sm font-bold text-blueprint-text tracking-wider uppercase">THE GAMBIT</span>
                 </div>
-                <div className="space-y-2 text-xs text-blue-200">
-                    <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 border border-blueprint-text bg-blue-900/50 block"></span>
-                        <span>Active Nodes: Click to access Systems/Logs</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Map size={12} className="text-blue-500" />
-                        <span>Map represents Professional Infrastructure</span>
-                    </div>
-                    <p className="text-[10px] text-blue-400 mt-2 italic border-t border-blue-900/30 pt-1">
-                        "Complexity is a feature. Navigate the nodes to inspect the architecture."
-                    </p>
+                <div className="text-xs text-blue-200 leading-relaxed font-light tracking-wide">
+                    "From the outside, it looked like I was throwing away a decade of security for a 'maybe.'
+                    People called it a risk; some even called it reckless. But they missed the underlying math.
+                    <strong className="text-blueprint-text font-bold block my-2 text-sm border-l-2 border-blueprint-text pl-3 py-1 bg-blue-900/20">
+                        It wasn’t a gamble, it was a gambit.
+                    </strong>
+                    I didn't just hope for a better outcome—I sacrificed a comfortable present to force a more powerful future."
                 </div>
             </div>
         </>

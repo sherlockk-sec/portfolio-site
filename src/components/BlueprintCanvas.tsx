@@ -316,10 +316,16 @@ const BlueprintCanvas: React.FC = () => {
 
         const targetNode = nodes.find(n => n.id === targetId);
         if (targetNode) {
-            // Zoom in tighter (1.5) now that map is smaller
-            setCenter(targetNode.position.x, targetNode.position.y, { zoom: 1.5, duration: 800 });
+            const isMobile = window.innerWidth < 768;
+            // Mobile: Offset Y by -150 to push content down (below nav bar)
+            // Desktop: Center normally
+            const yOffset = isMobile ? -150 : 0;
+            const zoomLevel = isMobile ? 1.2 : 1.5;
+
+            setCenter(targetNode.position.x, targetNode.position.y + yOffset, { zoom: zoomLevel, duration: 800 });
         } else {
-            if (section === 'home') fitView({ duration: 800 });
+            // Add padding to fitView to prevent top nav overlap (0.2 = 20% padding)
+            if (section === 'home') fitView({ duration: 800, padding: 0.2 });
         }
     };
 
@@ -366,6 +372,7 @@ const BlueprintCanvas: React.FC = () => {
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 fitView
+                fitViewOptions={{ padding: 0.2 }}
                 className="blueprint-cursor"
                 defaultEdgeOptions={{ type: 'data' }}
                 connectionLineStyle={{ stroke: '#64ffda' }}
