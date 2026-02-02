@@ -22,7 +22,8 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
             </div>
 
             {/* Gambit Quote - Hidden on mobile */}
-            <div className="!hidden md:!block absolute bottom-4 left-4 z-10 p-5 max-w-md bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+            {/* Moved to top-left to avoid overlapping bottom nodes (VAPT/Skills) */}
+            <div className="!hidden md:!block absolute top-24 left-8 z-10 p-5 max-w-md bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center gap-2 mb-3 border-b border-blueprint-border/50 pb-2">
                     <Info size={16} className="text-blueprint-text" />
                     <span className="text-sm font-bold text-blueprint-text tracking-wider uppercase">THE GAMBIT</span>
