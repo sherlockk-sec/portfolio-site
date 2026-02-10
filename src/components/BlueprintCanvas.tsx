@@ -287,8 +287,17 @@ const BlueprintCanvas: React.FC = () => {
         }));
     }, []);
 
+    // Initial State: Edges hidden
+    const startEdges = React.useMemo(() => {
+        return initialEdges.map(edge => ({
+            ...edge,
+            hidden: true, // Hide edges initially to prevent "cluster" mess
+            style: { ...edge.style, opacity: 0 }
+        }));
+    }, []);
+
     const [nodes, setNodes, onNodesChange] = useNodesState(startNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(startEdges);
     const { fitView, setCenter } = useReactFlow();
 
     const [isLocked, setIsLocked] = useState(true);
@@ -301,32 +310,39 @@ const BlueprintCanvas: React.FC = () => {
             // Wait a brief moment after close for effect
             const timer = setTimeout(() => {
                 setIsExploded(true);
-                // Animate to final positions with STAGGERED delays
+
+                // 1. Reveal and animate Nodes
                 setNodes(nds => nds.map((node) => {
                     const target = [...initialNodes, ...skillNodes].find(n => n.id === node.id);
-                    // Calculate distance from center for "ripple" effect, or just use random/index
-                    // Simple radial stagger: further nodes delay slightly more? Or random for "organic" feel?
-                    // Let's go with semi-random based on index for organic "pop"
-                    const delay = Math.floor(Math.random() * 300); // 0-300ms random delay
-
+                    const delay = Math.floor(Math.random() * 300);
                     return {
                         ...node,
                         position: target?.position || { x: 0, y: 0 },
                         style: {
                             ...node.style,
                             opacity: 1,
-                            // @ts-ignore - custom CSS variable
+                            // @ts-ignore
                             '--node-delay': `${delay}ms`
                         },
                     };
                 }));
-                // Fit view AFTER animation settles to avoid fighting the transition
-                // Animation takes ~1.2s + 300ms delay max = 1.5s
+
+                // 2. Reveal Edges (slightly delayed to let nodes start moving)
+                setTimeout(() => {
+                    setEdges(eds => eds.map(e => ({
+                        ...e,
+                        hidden: false,
+                        style: { ...e.style, opacity: 1, transition: 'opacity 0.5s ease-in' }
+                    })));
+                }, 100);
+
+                // 3. Fit view AFTER animation settles
                 setTimeout(() => fitView({ duration: 1500, padding: 0.4 }), 800);
-            }, 100);
+
+            }, 50); // Reduced initial delay (100 -> 50) for snappier response
             return () => clearTimeout(timer);
         }
-    }, [isModalOpen, isExploded, fitView, setNodes]);
+    }, [isModalOpen, isExploded, fitView, setNodes, setEdges]);
 
     // Initial Welcome Message - Show immediately
     React.useEffect(() => {
@@ -395,10 +411,10 @@ const BlueprintCanvas: React.FC = () => {
     return (
         <div className="w-screen h-screen bg-blueprint-bg relative">
             {/* Overlay to hide graph before explosion */}
-            {!isExploded && (
-                <div className="absolute inset-0 z-40 bg-blueprint-bg pointer-events-none transition-opacity duration-1000"
-                    style={{ opacity: isModalOpen ? 1 : 0 }} />
-            )}
+            <div
+                className="absolute inset-0 z-40 bg-blueprint-bg pointer-events-none transition-opacity duration-700"
+                style={{ opacity: isExploded ? 0 : 1 }}
+            />
 
             <NavigationOverlay onNavigate={handleNavigation} />
 
