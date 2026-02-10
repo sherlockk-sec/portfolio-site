@@ -274,31 +274,63 @@ const initialEdges: Edge[] = [
 ];
 
 const BlueprintCanvas: React.FC = () => {
-    // Removed ghostNodes from state to improve zoom behavior
-    const [nodes, , onNodesChange] = useNodesState([...initialNodes, ...skillNodes]);
+
+    // Animation State
+    const [isExploded, setIsExploded] = useState(false);
+
+    // Initial State: All nodes at (0,0) and invisible
+    const startNodes = React.useMemo(() => {
+        return [...initialNodes, ...skillNodes].map(node => ({
+            ...node,
+            position: { x: 0, y: 0 },
+            style: { ...node.style, opacity: 0 },
+        }));
+    }, []);
+
+    const [nodes, setNodes, onNodesChange] = useNodesState(startNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
     const { fitView, setCenter } = useReactFlow();
 
-    // Initial Welcome Message
-    React.useEffect(() => {
-        setTimeout(() => {
-            setModalData({
-                title: 'TERMINAL v2.0.4',
-                content: [
-                    '$ ssh guest@karthikeyan-portfolio',
-                    '> [OK] Connection established.',
-                    '> Initializing Motherboard Architecture...',
-                    '> ACCESS GRANTED.'
-                ]
-            });
-            setIsModalOpen(true);
-        }, 1500); // 1.5s delay to let the map animation finish first
-    }, []);
-
     const [isLocked, setIsLocked] = useState(true);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalData, setModalData] = useState({ title: '', content: [] as string[] });
+
+    // Trigger Explosion on Terminal Close
+    React.useEffect(() => {
+        if (!isModalOpen && !isExploded) {
+            // Wait a brief moment after close for effect
+            const timer = setTimeout(() => {
+                setIsExploded(true);
+                // Animate to final positions
+                setNodes(nds => nds.map(node => {
+                    const target = [...initialNodes, ...skillNodes].find(n => n.id === node.id);
+                    return {
+                        ...node,
+                        position: target?.position || { x: 0, y: 0 },
+                        style: { ...node.style, opacity: 1 },
+                    };
+                }));
+                // Fit view after explosion
+                setTimeout(() => fitView({ duration: 1500, padding: 0.4 }), 100);
+            }, 300);
+            return () => clearTimeout(timer);
+        }
+    }, [isModalOpen, isExploded, fitView, setNodes]);
+
+    // Initial Welcome Message - Show immediately
+    React.useEffect(() => {
+        // No delay - show immediately on load
+        setModalData({
+            title: 'TERMINAL v2.0.4',
+            content: [
+                '$ ssh guest@karthikeyan-portfolio',
+                '> [OK] Connection established.',
+                '> Initializing Motherboard Architecture...',
+                '> ACCESS GRANTED.'
+            ]
+        });
+        setIsModalOpen(true);
+    }, []);
 
     const handleNavigation = (section: string) => {
         let targetId = '';
@@ -347,22 +379,16 @@ const BlueprintCanvas: React.FC = () => {
         }
     };
 
-    // Initial View: Adaptive Zoom based on device
-    React.useEffect(() => {
-        setTimeout(() => {
-            const isMobile = window.innerWidth < 768;
-            if (isMobile) {
-                // Mobile: Zoom out to show context, center slightly lower
-                setCenter(0, 200, { zoom: 0.6, duration: 1000 });
-            } else {
-                // Desktop: Immersive close-up
-                setCenter(0, 0, { zoom: 1.1, duration: 1000 });
-            }
-        }, 100);
-    }, [setCenter]);
+
 
     return (
         <div className="w-screen h-screen bg-blueprint-bg relative">
+            {/* Overlay to hide graph before explosion */}
+            {!isExploded && (
+                <div className="absolute inset-0 z-40 bg-blueprint-bg pointer-events-none transition-opacity duration-1000"
+                    style={{ opacity: isModalOpen ? 1 : 0 }} />
+            )}
+
             <NavigationOverlay onNavigate={handleNavigation} />
 
             <ReactFlow

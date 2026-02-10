@@ -60,6 +60,11 @@ body {
   animation: fadeIn 0.2s ease-out forwards;
 }
 
+/* Node Animation for Explosion Effect */
+.react-flow__node {
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease-in-out;
+}
+
 /* Blink cursor for terminal */
 .blink-cursor::after {
   content: '▋';
