@@ -8,17 +8,17 @@ interface NavigationOverlayProps {
 const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => {
     return (
         <>
-            {/* Top Navigation Bar */}
-            <div className="absolute top-2 md:top-4 left-1/2 -translate-x-1/2 z-10 w-[95%] md:w-auto max-w-2xl flex md:justify-center gap-4 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border px-4 md:px-6 py-2 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-x-auto whitespace-nowrap scrollbar-hide">
-                <button onClick={() => onNavigate('home')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">ROOT</button>
-                <span className="text-blue-800">|</span>
-                <button onClick={() => onNavigate('experience')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">EXPERIENCE</button>
-                <span className="text-blue-800">|</span>
-                <button onClick={() => onNavigate('projects')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">PROJECTS</button>
-                <span className="text-blue-800">|</span>
-                <button onClick={() => onNavigate('certifications')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">CERTS</button>
-                <span className="text-blue-800">|</span>
-                <button onClick={() => onNavigate('skills')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors">SKILLS</button>
+            {/* Top Navigation Bar - Changed to Vertical Sidebar on Desktop */}
+            <div className="absolute top-4 left-4 z-10 flex flex-col items-start gap-4 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border p-4 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                <button onClick={() => onNavigate('home')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">ROOT</button>
+                <span className="text-blue-800 w-full h-[1px] bg-blue-900/50"></span>
+                <button onClick={() => onNavigate('experience')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">EXPERIENCE</button>
+                <span className="text-blue-800 w-full h-[1px] bg-blue-900/50"></span>
+                <button onClick={() => onNavigate('projects')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">PROJECTS</button>
+                <span className="text-blue-800 w-full h-[1px] bg-blue-900/50"></span>
+                <button onClick={() => onNavigate('certifications')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">CERTS</button>
+                <span className="text-blue-800 w-full h-[1px] bg-blue-900/50"></span>
+                <button onClick={() => onNavigate('skills')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">SKILLS</button>
             </div>
 
             {/* Gambit Quote - Compact Version */}

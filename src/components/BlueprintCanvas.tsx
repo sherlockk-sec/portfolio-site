@@ -207,6 +207,7 @@ const skillNodes: Node[] = [
     { id: 's-ad', type: 'container', position: { x: 60, y: 110 }, data: { label: 'Active Dir', icon: 'users' }, parentId: 'cat-infra' },
     { id: 's-prox', type: 'container', position: { x: -60, y: 110 }, data: { label: 'Proxmox', icon: 'server' }, parentId: 'cat-infra' },
     { id: 's-forti', type: 'container', position: { x: 60, y: 160 }, data: { label: 'Fortinet', icon: 'shield' }, parentId: 'cat-infra' },
+    { id: 's-guac', type: 'container', position: { x: 0, y: 260 }, data: { label: 'Apache Guac', icon: 'globe' }, parentId: 'cat-infra' }, // New Node
     { id: 's-docker', type: 'container', position: { x: -60, y: 160 }, data: { label: 'Docker', icon: 'docker' }, parentId: 'cat-infra' },
     { id: 's-lin', type: 'container', position: { x: 60, y: 210 }, data: { label: 'Linux (Kali)', icon: 'terminal' }, parentId: 'cat-infra' },
     { id: 's-win', type: 'container', position: { x: -60, y: 210 }, data: { label: 'Win Server', icon: 'server' }, parentId: 'cat-infra' },
@@ -239,36 +240,38 @@ const initialEdges: Edge[] = [
     { id: 'l-cat-5', source: 'router-skills', target: 'cat-foren', type: 'data' },
 
     // Skill Sub-links (VAPT)
-    { id: 'l-v-1', source: 'cat-vapt', target: 's-burp', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-v-2', source: 'cat-vapt', target: 's-nmap', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-v-3', source: 'cat-vapt', target: 's-nessus', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-v-4', source: 'cat-vapt', target: 's-meta', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-v-5', source: 'cat-vapt', target: 's-blood', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-v-6', source: 'cat-vapt', target: 's-wire', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-1', source: 'cat-vapt', target: 's-burp', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-2', source: 'cat-vapt', target: 's-nmap', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-3', source: 'cat-vapt', target: 's-nessus', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-4', source: 'cat-vapt', target: 's-meta', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-5', source: 'cat-vapt', target: 's-blood', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-v-6', source: 'cat-vapt', target: 's-wire', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 
     // SOC
-    { id: 'l-soc-1', source: 'cat-soc', target: 's-wazuh', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-soc-2', source: 'cat-soc', target: 's-ir', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-soc-3', source: 'cat-soc', target: 's-rca', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-soc-1', source: 'cat-soc', target: 's-wazuh', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-soc-2', source: 'cat-soc', target: 's-ir', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-soc-3', source: 'cat-soc', target: 's-rca', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 
     // Auto
-    { id: 'l-a-1', source: 'cat-auto', target: 's-n8n', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-a-2', source: 'cat-auto', target: 's-py', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-a-3', source: 'cat-auto', target: 's-bash', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-a-1', source: 'cat-auto', target: 's-n8n', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-a-2', source: 'cat-auto', target: 's-py', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-a-3', source: 'cat-auto', target: 's-bash', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 
     // Infra
-    { id: 'l-i-1', source: 'cat-infra', target: 's-ad', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-i-2', source: 'cat-infra', target: 's-prox', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-i-3', source: 'cat-infra', target: 's-forti', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-i-4', source: 'cat-infra', target: 's-docker', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-i-5', source: 'cat-infra', target: 's-lin', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-i-6', source: 'cat-infra', target: 's-win', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-1', source: 'cat-infra', target: 's-ad', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-2', source: 'cat-infra', target: 's-prox', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-3', source: 'cat-infra', target: 's-forti', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-4', source: 'cat-infra', target: 's-docker', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-5', source: 'cat-infra', target: 's-lin', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-i-6', source: 'cat-infra', target: 's-win', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    // Guacamole Link
+    { id: 'l-i-7', source: 'cat-infra', target: 's-guac', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 
     // Forensics
-    { id: 'l-f-1', source: 'cat-foren', target: 's-mal', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-f-2', source: 'cat-foren', target: 's-osint', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-f-3', source: 'cat-foren', target: 's-df', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
-    { id: 'l-f-4', source: 'cat-foren', target: 's-auto', type: 'step', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-f-1', source: 'cat-foren', target: 's-mal', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-f-2', source: 'cat-foren', target: 's-osint', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-f-3', source: 'cat-foren', target: 's-df', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
+    { id: 'l-f-4', source: 'cat-foren', target: 's-auto', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 ];
 
 const BlueprintCanvas: React.FC = () => {
