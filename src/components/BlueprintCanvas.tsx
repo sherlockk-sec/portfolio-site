@@ -301,18 +301,29 @@ const BlueprintCanvas: React.FC = () => {
             // Wait a brief moment after close for effect
             const timer = setTimeout(() => {
                 setIsExploded(true);
-                // Animate to final positions
-                setNodes(nds => nds.map(node => {
+                // Animate to final positions with STAGGERED delays
+                setNodes(nds => nds.map((node) => {
                     const target = [...initialNodes, ...skillNodes].find(n => n.id === node.id);
+                    // Calculate distance from center for "ripple" effect, or just use random/index
+                    // Simple radial stagger: further nodes delay slightly more? Or random for "organic" feel?
+                    // Let's go with semi-random based on index for organic "pop"
+                    const delay = Math.floor(Math.random() * 300); // 0-300ms random delay
+
                     return {
                         ...node,
                         position: target?.position || { x: 0, y: 0 },
-                        style: { ...node.style, opacity: 1 },
+                        style: {
+                            ...node.style,
+                            opacity: 1,
+                            // @ts-ignore - custom CSS variable
+                            '--node-delay': `${delay}ms`
+                        },
                     };
                 }));
-                // Fit view after explosion
-                setTimeout(() => fitView({ duration: 1500, padding: 0.4 }), 100);
-            }, 300);
+                // Fit view AFTER animation settles to avoid fighting the transition
+                // Animation takes ~1.2s + 300ms delay max = 1.5s
+                setTimeout(() => fitView({ duration: 1500, padding: 0.4 }), 800);
+            }, 100);
             return () => clearTimeout(timer);
         }
     }, [isModalOpen, isExploded, fitView, setNodes]);
