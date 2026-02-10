@@ -14,7 +14,7 @@ const SwitchNode: React.FC<NodeProps> = ({ data, selected }) => {
                     <Network size={32} className="text-blueprint-text" />
                 </div>
                 <div className="text-center">
-                    <div className="text-xs text-blue-400 font-bold tracking-widest uppercase">Identity</div>
+
                     <div className="text-sm font-bold text-white">{data.label as string}</div>
                     <div className="text-[10px] text-blue-300/70 mt-1">VLAN 1: ACTIVE</div>
                 </div>

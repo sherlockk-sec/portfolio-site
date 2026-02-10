@@ -279,12 +279,23 @@ const BlueprintCanvas: React.FC = () => {
     const [isExploded, setIsExploded] = useState(false);
 
     // Initial State: All nodes at (0,0) and invisible
+    // Initial State: All nodes at (0,0) and invisible
     const startNodes = React.useMemo(() => {
-        return [...initialNodes, ...skillNodes].map(node => ({
-            ...node,
-            position: { x: 0, y: 0 },
-            style: { ...node.style, opacity: 0 },
-        }));
+        return [...initialNodes, ...skillNodes,
+        // GHOST BOTTOM for balanced initial zoom
+        { id: 'ghost-bottom', type: 'switch', position: { x: 0, y: 500 }, data: { label: '' }, style: { opacity: 0, width: 1, height: 1 }, draggable: false, connectable: false }
+        ].map(node => {
+            // Keep ghost nodes at their constrained positions to ensure wide bounding box
+            if (node.id.startsWith('ghost')) {
+                return node;
+            }
+            // Collapse others to center
+            return {
+                ...node,
+                position: { x: 0, y: 0 },
+                style: { ...node.style, opacity: 0 },
+            };
+        });
     }, []);
 
     // Initial State: Edges hidden
@@ -337,7 +348,8 @@ const BlueprintCanvas: React.FC = () => {
                 }, 100);
 
                 // 3. Fit view AFTER animation settles
-                setTimeout(() => fitView({ duration: 1500, padding: 0.4 }), 800);
+                // 3. Fit view AFTER animation settles
+                setTimeout(() => fitView({ duration: 1500, padding: 0.1 }), 800);
 
             }, 50); // Reduced initial delay (100 -> 50) for snappier response
             return () => clearTimeout(timer);

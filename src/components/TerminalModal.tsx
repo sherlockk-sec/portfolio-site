@@ -59,13 +59,19 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
                     setCurrentCharIndex(0);
                 }, 100); // Faster line pause (100ms)
             }
+        } else {
+            // Finished typing naturally
+            const closeTimer = setTimeout(() => {
+                onClose();
+            }, 800); // Wait 800ms then close
+            return () => clearTimeout(closeTimer);
         }
 
         return () => {
             if (typeTimeoutRef.current) clearTimeout(typeTimeoutRef.current);
             if (lineTimeoutRef.current) clearTimeout(lineTimeoutRef.current);
         };
-    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped]);
+    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped, onClose]);
 
     if (!isOpen) return null;
 
