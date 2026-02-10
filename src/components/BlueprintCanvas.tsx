@@ -45,9 +45,6 @@ const edgeTypes = {
 // Categories spaced horizontally relative to Skills Hub
 
 const initialNodes: Node[] = [
-    // GHOST NODE for Top Padding (Forces fitView to respect Nav Bar space)
-    // GHOST NODE for Top Padding (Forces fitView to respect Nav Bar space)
-    { id: 'ghost-top', type: 'default', position: { x: 0, y: -500 }, data: { label: '' }, style: { opacity: 0, width: 1, height: 1, visibility: 'hidden' }, draggable: false, connectable: false },
     // CPU & Bridges
     { id: 'switch-1', type: 'switch', position: { x: 0, y: 0 }, data: { label: 'Karthikeyan S' } },
     // ---------------------------------------------------------
@@ -281,22 +278,13 @@ const BlueprintCanvas: React.FC = () => {
 
     // Initial State: All nodes at (0,0) and invisible
     // Initial State: All nodes at (0,0) and invisible
+    // Initial State: All nodes at (0,0) and invisible
     const startNodes = React.useMemo(() => {
-        return [...initialNodes, ...skillNodes,
-        // GHOST BOTTOM for balanced initial zoom
-        { id: 'ghost-bottom', type: 'switch', position: { x: 0, y: 500 }, data: { label: '' }, style: { opacity: 0, width: 1, height: 1 }, draggable: false, connectable: false }
-        ].map(node => {
-            // Keep ghost nodes at their constrained positions to ensure wide bounding box
-            if (node.id.startsWith('ghost')) {
-                return node;
-            }
-            // Collapse others to center
-            return {
-                ...node,
-                position: { x: 0, y: 0 },
-                style: { ...node.style, opacity: 0 },
-            };
-        });
+        return [...initialNodes, ...skillNodes].map(node => ({
+            ...node,
+            position: { x: 0, y: 0 },
+            style: { ...node.style, opacity: 0 },
+        }));
     }, []);
 
     // Initial State: Edges hidden
@@ -468,6 +456,7 @@ const BlueprintCanvas: React.FC = () => {
                 onClose={() => setIsModalOpen(false)}
                 title={modalData.title}
                 content={modalData.content}
+                autoClose={modalData.title.includes('TERMINAL')}
             />
         </div>
     );

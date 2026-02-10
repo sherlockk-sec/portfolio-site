@@ -18,6 +18,7 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
     // Refs for timeouts to clear them properly
     const typeTimeoutRef = useRef<number | null>(null);
     const lineTimeoutRef = useRef<number | null>(null);
+    const closeTimeoutRef = useRef<number | null>(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -25,6 +26,7 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
             setCurrentLineIndex(0);
             setCurrentCharIndex(0);
             setIsSkipped(false);
+            if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
         }
     }, [isOpen]);
 
@@ -36,6 +38,7 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
         if (lineTimeoutRef.current) clearTimeout(lineTimeoutRef.current);
     };
 
+    // Typing Logic
     useEffect(() => {
         if (!isOpen || isSkipped) return;
 
@@ -60,21 +63,29 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
                     setCurrentCharIndex(0);
                 }, 100); // Faster line pause (100ms)
             }
-        } else {
-            // Finished typing naturally
-            if (autoClose) { // Only auto-close if enabled
-                const closeTimer = setTimeout(() => {
-                    onClose();
-                }, 800); // Wait 800ms then close
-                return () => clearTimeout(closeTimer);
-            }
         }
 
         return () => {
             if (typeTimeoutRef.current) clearTimeout(typeTimeoutRef.current);
             if (lineTimeoutRef.current) clearTimeout(lineTimeoutRef.current);
         };
-    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped, onClose, autoClose]);
+    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped]);
+
+    // Auto-Close Logic (Runs independently when content is fully displayed)
+    useEffect(() => {
+        if (isOpen && autoClose && currentLineIndex >= content.length) {
+            // Clear any existing timer first
+            if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+
+            closeTimeoutRef.current = setTimeout(() => {
+                onClose();
+            }, 800);
+        }
+        return () => {
+            if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+        };
+    }, [isOpen, autoClose, currentLineIndex, content.length, onClose]);
+
 
     if (!isOpen) return null;
 
