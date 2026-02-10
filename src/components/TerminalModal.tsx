@@ -6,9 +6,10 @@ interface TerminalModalProps {
     onClose: () => void;
     title: string;
     content: string[];
+    autoClose?: boolean; // New prop
 }
 
-const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, content }) => {
+const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, content, autoClose = false }) => {
     const [displayedContent, setDisplayedContent] = useState<string[]>([]);
     const [currentLineIndex, setCurrentLineIndex] = useState(0);
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
@@ -61,17 +62,19 @@ const TerminalModal: React.FC<TerminalModalProps> = ({ isOpen, onClose, title, c
             }
         } else {
             // Finished typing naturally
-            const closeTimer = setTimeout(() => {
-                onClose();
-            }, 800); // Wait 800ms then close
-            return () => clearTimeout(closeTimer);
+            if (autoClose) { // Only auto-close if enabled
+                const closeTimer = setTimeout(() => {
+                    onClose();
+                }, 800); // Wait 800ms then close
+                return () => clearTimeout(closeTimer);
+            }
         }
 
         return () => {
             if (typeTimeoutRef.current) clearTimeout(typeTimeoutRef.current);
             if (lineTimeoutRef.current) clearTimeout(lineTimeoutRef.current);
         };
-    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped, onClose]);
+    }, [isOpen, currentLineIndex, currentCharIndex, content, isSkipped, onClose, autoClose]);
 
     if (!isOpen) return null;
 

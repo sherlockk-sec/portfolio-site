@@ -46,7 +46,8 @@ const edgeTypes = {
 
 const initialNodes: Node[] = [
     // GHOST NODE for Top Padding (Forces fitView to respect Nav Bar space)
-    { id: 'ghost-top', type: 'switch', position: { x: 0, y: -500 }, data: { label: '' }, style: { opacity: 0, width: 1, height: 1 }, draggable: false, connectable: false },
+    // GHOST NODE for Top Padding (Forces fitView to respect Nav Bar space)
+    { id: 'ghost-top', type: 'default', position: { x: 0, y: -500 }, data: { label: '' }, style: { opacity: 0, width: 1, height: 1, visibility: 'hidden' }, draggable: false, connectable: false },
     // CPU & Bridges
     { id: 'switch-1', type: 'switch', position: { x: 0, y: 0 }, data: { label: 'Karthikeyan S' } },
     // ---------------------------------------------------------
