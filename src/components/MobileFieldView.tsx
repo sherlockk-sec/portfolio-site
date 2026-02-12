@@ -58,6 +58,7 @@ const CERT_DATA = {
     ]
 };
 
+// Expanded Skills List (Matching Desktop)
 const SKILLS_DATA = [
     { name: 'Burp Suite', status: 'ONLINE', icon: Zap },
     { name: 'Wazuh', status: 'ACTIVE', icon: Shield },
@@ -65,6 +66,13 @@ const SKILLS_DATA = [
     { name: 'Docker', status: 'RUNNING', icon: Server },
     { name: 'Linux', status: 'ROOT', icon: Terminal },
     { name: 'n8n', status: 'SYNCED', icon: Wifi },
+    { name: 'Metasploit', status: 'READY', icon: Shield },
+    { name: 'Wireshark', status: 'ACTIVE', icon: Wifi },
+    { name: 'Bash', status: 'ROOT', icon: Terminal },
+    { name: 'Proxmox', status: 'RUNNING', icon: Server },
+    { name: 'Active Dir', status: 'SYNCED', icon: User },
+    { name: 'Nmap', status: 'READY', icon: Zap },
+    { name: 'Git', status: 'SYNCED', icon: FileCode },
 ];
 
 const MobileFieldView: React.FC = () => {
@@ -100,13 +108,15 @@ const MobileFieldView: React.FC = () => {
                 <span className="text-[10px] text-cyan-500">LATENCY: 12ms</span>
             </div>
 
-            {/* --- MAIN FEED (Traceroute Timeline) --- */}
-            <div className="px-4 py-6 relative">
+            <div className="px-4 py-6">
 
-                {/* Vertical Dotted Line */}
-                <div className="absolute left-[27px] top-10 bottom-10 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
+                {/* --- TIMELINE SECTION (Identity -> Certs) --- */}
+                {/* Wrap these in a generic div with relative positioning so the line stays within this block */}
+                <div className="relative space-y-8 pb-8">
 
-                <div className="space-y-8">
+                    {/* Vertical Dotted Line */}
+                    {/* Runs from Top 10px to Bottom 20px of this specific container */}
+                    <div className="absolute left-[27px] top-10 bottom-6 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
 
                     {/* IDENTITY NODE (Intro) */}
                     <div id="home" className="relative pl-8 animate-fade-in-up">
@@ -209,7 +219,7 @@ const MobileFieldView: React.FC = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-cyan-600 mb-1">CERTIFIED</div>
+                                    <div className="text-xs text-cyan-600 mb-1">CERTIFICATIONS</div>
                                     <h3 className="font-bold text-cyan-100">{CERT_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{CERT_DATA.subtitle}</div>
                                 </div>
@@ -223,30 +233,47 @@ const MobileFieldView: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* SKILLS LIST (Simplified) */}
-                    <div id="skills" className="pt-4 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                </div>
+
+                {/* --- FOOTER SECTION (Skills -> Resume -> Quote) --- */}
+                {/* No vertical line here */}
+                <div className="space-y-8">
+
+                    {/* SKILLS LIST (Expanded & Renamed) */}
+                    <div id="skills" className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xs font-bold text-cyan-100 tracking-widest">ACTIVE_SERVICES</span>
+                            <span className="text-xs font-bold text-cyan-100 tracking-widest uppercase">SKILLS</span>
                         </div>
                         <div className="flex flex-wrap gap-2">
                             {SKILLS_DATA.map((skill, idx) => (
-                                <div key={idx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded text-[11px] text-cyan-400 font-mono">
+                                <div key={idx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded text-[11px] text-cyan-400 font-mono hover:border-cyan-500/50 transition-colors cursor-default">
                                     {skill.name}
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* DOWNLOAD RESUME - Bottom Scroll */}
-                    <div className="pt-8 pb-4 flex justify-center animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                    {/* DOWNLOAD RESUME */}
+                    <div className="flex justify-center animate-fade-in-up" style={{ animationDelay: '600ms' }}>
                         <a
                             href="/Karthikeyan_Cybersecurity_Resume.pdf"
                             download
-                            className="flex items-center gap-2 bg-cyan-900/20 border border-cyan-500/50 px-6 py-3 rounded text-cyan-400 hover:bg-cyan-900/40 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                            className="flex items-center gap-2 bg-cyan-900/20 border border-cyan-500/50 px-6 py-3 rounded text-cyan-400 hover:bg-cyan-900/40 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)] w-full justify-center"
                         >
                             <Briefcase size={16} />
                             <span className="text-xs font-bold tracking-widest">DOWNLOAD RESUME</span>
                         </a>
+                    </div>
+
+                    {/* FOOTER - Gambit Quote */}
+                    <div className="pb-8 text-center animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-900/50 to-transparent mb-4"></div>
+                        <p className="text-[10px] text-slate-500 italic max-w-[80%] mx-auto leading-relaxed">
+                            "Sacrificed a comfortable present to force a more powerful future."
+                        </p>
+                        <div className="text-[9px] text-cyan-900/60 mt-2 tracking-widest">
+                            SYSTEM TERMINATED // CODE 0
+                        </div>
                     </div>
 
                 </div>
