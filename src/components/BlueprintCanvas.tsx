@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Lock, Unlock } from 'lucide-react';
 import {
     ReactFlow,
@@ -274,13 +274,23 @@ const initialEdges: Edge[] = [
     { id: 'l-f-4', source: 'cat-foren', target: 's-auto', type: 'smoothstep', style: { strokeWidth: 1, strokeDasharray: '5,5', opacity: 0.3 } },
 ];
 
+import MobileFieldView from './MobileFieldView';
+
 const BlueprintCanvas: React.FC = () => {
+    // Screen Size Detection for Hybrid Interface
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Animation State
     const [isExploded, setIsExploded] = useState(false);
 
-    // Initial State: All nodes at (0,0) and invisible
-    // Initial State: All nodes at (0,0) and invisible
     // Initial State: All nodes at (0,0) and invisible
     const startNodes = React.useMemo(() => {
         return [...initialNodes, ...skillNodes].map(node => ({
@@ -309,7 +319,7 @@ const BlueprintCanvas: React.FC = () => {
 
     // Trigger Explosion on Terminal Close
     React.useEffect(() => {
-        if (!isModalOpen && !isExploded) {
+        if (!isModalOpen && !isExploded && !isMobile) {
             // Wait a brief moment after close for effect
             const timer = setTimeout(() => {
                 setIsExploded(true);
@@ -341,23 +351,19 @@ const BlueprintCanvas: React.FC = () => {
 
                 // 3. Fit view AFTER animation settles
                 setTimeout(() => {
-                    const isMobile = window.innerWidth < 768;
-                    if (isMobile) {
-                        // Mobile: Zoom in on "Karthikeyan S" (Central Node) for readability
-                        setCenter(0, 0, { zoom: 0.85, duration: 1500 });
-                    } else {
-                        // Desktop: Fit all nodes
-                        fitView({ duration: 1500, padding: 0.2 });
-                    }
+                    // Desktop: Fit all nodes
+                    fitView({ duration: 1500, padding: 0.2 });
                 }, 800);
 
             }, 50); // Reduced initial delay (100 -> 50) for snappier response
             return () => clearTimeout(timer);
         }
-    }, [isModalOpen, isExploded, fitView, setNodes, setEdges, setCenter]);
+    }, [isModalOpen, isExploded, fitView, setNodes, setEdges, setCenter, isMobile]);
 
-    // Initial Welcome Message - Show immediately
+    // Initial Welcome Message - Show immediately (Only on Desktop)
     React.useEffect(() => {
+        if (isMobile) return;
+
         // No delay - show immediately on load
         setModalData({
             title: 'TERMINAL v2.0.4',
@@ -369,12 +375,10 @@ const BlueprintCanvas: React.FC = () => {
             ]
         });
         setIsModalOpen(true);
-    }, []);
+    }, [isMobile]);
 
     const handleNavigation = (section: string) => {
-        const isMobile = window.innerWidth < 768;
         let targetId = '';
-
         switch (section) {
             case 'home': targetId = 'switch-1'; break;
             case 'experience': targetId = 'server-tevel'; break;
@@ -384,31 +388,17 @@ const BlueprintCanvas: React.FC = () => {
         }
 
         if (section === 'skills') {
-            // Mobile: Zoom 0.75 to see cluster. Desktop: 0.9
-            const skillZoom = isMobile ? 0.75 : 0.9;
-            setCenter(0, 750, { zoom: skillZoom, duration: 1000 });
+            // Widen zoom for the large skills cluster
+            setCenter(0, 750, { zoom: 0.9, duration: 1000 });
             return;
         }
 
         const targetNode = nodes.find(n => n.id === targetId);
-
         if (targetNode) {
-            // Mobile: Offset Y by +50 to push content UP (away from bottom nav)
-            // Desktop: Center normally (0)
-            const yOffset = isMobile ? 50 : 0;
-            // Mobile: Zoom 1.1 for clear text. Desktop: 1.5
-            const zoomLevel = isMobile ? 1.1 : 1.5;
-
-            setCenter(targetNode.position.x, targetNode.position.y + yOffset, { zoom: zoomLevel, duration: 800 });
+            setCenter(targetNode.position.x, targetNode.position.y, { zoom: 1.5, duration: 800 });
         } else {
-            // Home / Default Logic
-            if (section === 'home') {
-                if (isMobile) {
-                    setCenter(0, 0, { zoom: 0.85, duration: 800 });
-                } else {
-                    fitView({ duration: 800, padding: 0.2 });
-                }
-            }
+            // Add padding to fitView to prevent top nav overlap (0.2 = 20% padding)
+            if (section === 'home') fitView({ duration: 800, padding: 0.2 });
         }
     };
 
@@ -428,8 +418,12 @@ const BlueprintCanvas: React.FC = () => {
         }
     };
 
+    // --- HYBRID INTERFACE RETURN ---
+    if (isMobile) {
+        return <MobileFieldView />;
+    }
 
-
+    // --- DESKTOP VIEW (React Flow Graph) ---
     return (
         <div className="w-screen h-screen bg-blueprint-bg relative">
             {/* Overlay to hide graph before explosion */}
@@ -449,7 +443,7 @@ const BlueprintCanvas: React.FC = () => {
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 fitView
-                fitViewOptions={{ padding: window.innerWidth < 768 ? 0.1 : 0.2 }}
+                fitViewOptions={{ padding: 0.2 }}
                 className="blueprint-cursor"
                 defaultEdgeOptions={{ type: 'data' }}
                 connectionLineStyle={{ stroke: '#64ffda' }}
