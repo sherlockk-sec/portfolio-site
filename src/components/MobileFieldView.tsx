@@ -8,10 +8,9 @@ import {
 // --- Data Constants (Duplicated from Desktop for Isolation) ---
 const EDUCATION_DATA = {
     title: 'VIT Bhopal',
-    subtitle: 'M.Tech CSE',
+    subtitle: 'Integrated M.Tech Computer Science with specialization in Cybersecurity',
     details: [
         'CGPA: 7.09/10.0',
-        'Integrated M.Tech Cybersec',
         '-----------------',
         'Coursework:',
         '> Pentesting & Red Teaming',
@@ -23,8 +22,10 @@ const EDUCATION_DATA = {
 const EXPERIENCE_DATA = {
     title: 'Tevel Cyber Corps',
     subtitle: 'Cybersecurity Intern',
+    location: 'Location: Chennai',
     details: [
         'Role: Intern (Oct 25 - Jan 26)',
+        'Location: Chennai',
         '-----------------',
         '> Executed DDoS Pentesting',
         '> Built n8n Automation Workflows',
@@ -137,7 +138,7 @@ const MobileFieldView: React.FC = () => {
             <div className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-cyan-800/50 px-4 py-2 flex justify-between items-center shadow-lg shadow-cyan-900/20">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-xs font-bold tracking-widest text-cyan-100">NET_DIAG_TOOL_v2</span>
+                    <span className="text-xs font-bold tracking-widest text-cyan-100">SEC_OPS_TERMINAL_v1</span>
                 </div>
                 <div className="text-[10px] text-cyan-600">{currentTime}</div>
             </div>
@@ -156,27 +157,6 @@ const MobileFieldView: React.FC = () => {
                 <div className="relative space-y-8 pb-8">
 
                     {/* Vertical Dotted Line */}
-                    {/* 
-                        Align Fix: 
-                        Padding of Container = px-4 (16px)
-                        Icon Container Width = w-6 (24px)
-                        Center of Icon = 12px from left edge of content area.
-                        
-                        Line Calculation:
-                        Container Padding Left = 16px
-                        Half Icon Width = 12px
-                        Total Left Offset = 16px + 12px - 1px (half border width) = 27px
-                        
-                        Wait, standard padding is 1rem (16px).
-                        Relative container 'pl-8' on items creates space.
-                        Let's re-verify alignment. 
-                        Icons are absolute at left-0 inside 'relative pl-8'.
-                        So Icons are at 0px relative to the item container.
-                        The item container has 'pl-8' (32px padding).
-                        The line should be centered on the icon.
-                        Icon width is w-6 (24px). Center is 12px.
-                        So line should be at left-[11px] (12px - 1px border).
-                    */}
                     <div className="absolute left-[11px] top-10 bottom-6 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
 
                     {/* IDENTITY NODE (Intro) */}
@@ -203,7 +183,7 @@ const MobileFieldView: React.FC = () => {
                                 <div>
                                     <div className="text-xs text-cyan-600 mb-1">EDUCATION</div>
                                     <h3 className="font-bold text-cyan-100">{EDUCATION_DATA.title}</h3>
-                                    <div className="text-xs text-slate-400">Int {EDUCATION_DATA.subtitle}</div>
+                                    <div className="text-xs text-slate-400 leading-tight mt-1">{EDUCATION_DATA.subtitle}</div>
                                 </div>
                                 {expandedCard === 'edu' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
@@ -231,6 +211,7 @@ const MobileFieldView: React.FC = () => {
                                     <div className="text-xs text-cyan-600 mb-1">EXPERIENCE</div>
                                     <h3 className="font-bold text-cyan-100">{EXPERIENCE_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{EXPERIENCE_DATA.subtitle}</div>
+                                    <div className="text-[10px] text-cyan-700 mt-0.5">{EXPERIENCE_DATA.location}</div>
                                 </div>
                                 {expandedCard === 'work' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
@@ -301,19 +282,20 @@ const MobileFieldView: React.FC = () => {
 
                     {/* SKILLS LIST (Categorized) */}
                     <div id="skills" className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="text-xs font-bold text-cyan-100 tracking-widest uppercase border-b border-cyan-500/30 pb-1 w-full">SKILLS_DATABASE</span>
+                        <div className="flex items-center gap-2 mb-6">
+                            {/* Styling Update: Bigger text, no underscore, clean underline */}
+                            <span className="text-lg font-bold text-cyan-100 uppercase border-b-2 border-cyan-500/50 pb-1 w-full tracking-wider">SKILLS DATABASE</span>
                         </div>
 
                         <div className="space-y-6">
                             {SKILLS_CATEGORIES.map((category, idx) => (
-                                <div key={idx} className="space-y-2">
-                                    <h4 className="text-[10px] text-cyan-500 font-bold tracking-wider uppercase ml-1 opacity-80">{category.title}</h4>
+                                <div key={idx} className="space-y-3">
+                                    <h4 className="text-[11px] text-cyan-400 font-bold tracking-widest uppercase ml-1 opacity-90 border-l-2 border-cyan-800 pl-2">{category.title}</h4>
                                     <div className="flex flex-wrap gap-2">
                                         {category.skills.map((skill, sIdx) => (
                                             <div key={sIdx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded flex items-center gap-2 hover:border-cyan-500/50 transition-colors cursor-default">
-                                                <skill.icon size={10} className="text-cyan-600" />
-                                                <span className="text-[11px] text-cyan-400 font-mono">{skill.name}</span>
+                                                <skill.icon size={12} className="text-cyan-600" />
+                                                <span className="text-[12px] text-cyan-300 font-mono">{skill.name}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -327,20 +309,20 @@ const MobileFieldView: React.FC = () => {
                         <a
                             href="/Karthikeyan_Cybersecurity_Resume.pdf"
                             download
-                            className="flex items-center gap-2 bg-cyan-900/20 border border-cyan-500/50 px-6 py-3 rounded text-cyan-400 hover:bg-cyan-900/40 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)] w-full justify-center"
+                            className="flex items-center gap-2 bg-slate-900 border border-cyan-500 px-6 py-4 rounded text-cyan-400 hover:bg-cyan-900/20 hover:text-cyan-300 transition-all shadow-[0_0_20px_rgba(6,182,212,0.15)] w-full justify-center group"
                         >
-                            <Briefcase size={16} />
-                            <span className="text-xs font-bold tracking-widest">DOWNLOAD RESUME</span>
+                            <Briefcase size={18} className="group-hover:text-cyan-200 transition-colors" />
+                            <span className="text-sm font-bold tracking-widest group-hover:text-cyan-200 transition-colors">DOWNLOAD RESUME</span>
                         </a>
                     </div>
 
                     {/* FOOTER - Gambit Quote */}
                     <div className="pb-8 text-center animate-fade-in-up" style={{ animationDelay: '700ms' }}>
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-900/50 to-transparent mb-4"></div>
-                        <p className="text-[10px] text-slate-500 italic max-w-[80%] mx-auto leading-relaxed">
-                            "Sacrificed a comfortable present to force a more powerful future."
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-900/50 to-transparent mb-6"></div>
+                        <p className="text-[11px] text-slate-400 italic max-w-[90%] mx-auto leading-relaxed font-serif tracking-wide">
+                            "It wasn't a Gamble, it was a Gambit."
                         </p>
-                        <div className="text-[9px] text-cyan-900/60 mt-2 tracking-widest">
+                        <div className="text-[9px] text-cyan-900/60 mt-4 tracking-[0.2em] font-mono">
                             SYSTEM TERMINATED // CODE 0
                         </div>
                     </div>
