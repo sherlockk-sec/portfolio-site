@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info } from 'lucide-react';
+import { Info, Download } from 'lucide-react';
 
 interface NavigationOverlayProps {
     onNavigate: (section: string) => void;
@@ -20,6 +20,16 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
                 <span className="text-blue-800 w-full h-[1px] bg-blue-900/50"></span>
                 <button onClick={() => onNavigate('skills')} className="text-sm font-mono text-blueprint-text hover:text-white transition-colors w-full text-left">SKILLS</button>
             </div>
+
+            {/* Resume Download Button - Top Right */}
+            <a
+                href="/Karthikeyan_Cybersecurity_Resume.pdf"
+                download="Karthikeyan_Cybersecurity_Resume.pdf"
+                className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border px-4 py-2 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] text-blueprint-text hover:text-white hover:bg-blue-900/30 transition-all group"
+            >
+                <Download size={16} className="group-hover:animate-bounce" />
+                <span className="text-sm font-bold font-mono tracking-wider">GET INTEL (RESUME)</span>
+            </a>
 
             {/* Gambit Quote - Compact Version */}
             <div className="!hidden md:!block absolute bottom-6 left-6 z-10 p-3 max-w-[280px] bg-blueprint-bg/90 backdrop-blur-xl rounded-lg border border-blueprint-border/40 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
