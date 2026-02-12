@@ -340,13 +340,21 @@ const BlueprintCanvas: React.FC = () => {
                 }, 100);
 
                 // 3. Fit view AFTER animation settles
-                // 3. Fit view AFTER animation settles
-                setTimeout(() => fitView({ duration: 1500, padding: 0.1 }), 800);
+                setTimeout(() => {
+                    const isMobile = window.innerWidth < 768;
+                    if (isMobile) {
+                        // Mobile: Zoom in on "Karthikeyan S" (Central Node) for readability
+                        setCenter(0, 0, { zoom: 0.85, duration: 1500 });
+                    } else {
+                        // Desktop: Fit all nodes
+                        fitView({ duration: 1500, padding: 0.2 });
+                    }
+                }, 800);
 
             }, 50); // Reduced initial delay (100 -> 50) for snappier response
             return () => clearTimeout(timer);
         }
-    }, [isModalOpen, isExploded, fitView, setNodes, setEdges]);
+    }, [isModalOpen, isExploded, fitView, setNodes, setEdges, setCenter]);
 
     // Initial Welcome Message - Show immediately
     React.useEffect(() => {
@@ -364,7 +372,9 @@ const BlueprintCanvas: React.FC = () => {
     }, []);
 
     const handleNavigation = (section: string) => {
+        const isMobile = window.innerWidth < 768;
         let targetId = '';
+
         switch (section) {
             case 'home': targetId = 'switch-1'; break;
             case 'experience': targetId = 'server-tevel'; break;
@@ -374,23 +384,31 @@ const BlueprintCanvas: React.FC = () => {
         }
 
         if (section === 'skills') {
-            // Widen zoom for the large skills cluster
-            setCenter(0, 750, { zoom: 0.9, duration: 1000 });
+            // Mobile: Zoom 0.75 to see cluster. Desktop: 0.9
+            const skillZoom = isMobile ? 0.75 : 0.9;
+            setCenter(0, 750, { zoom: skillZoom, duration: 1000 });
             return;
         }
 
         const targetNode = nodes.find(n => n.id === targetId);
+
         if (targetNode) {
-            const isMobile = window.innerWidth < 768;
-            // Mobile: Offset Y by -150 to push content down (below nav bar)
-            // Desktop: Center normally
-            const yOffset = isMobile ? -150 : 0;
-            const zoomLevel = isMobile ? 1.2 : 1.5;
+            // Mobile: Offset Y by +50 to push content UP (away from bottom nav)
+            // Desktop: Center normally (0)
+            const yOffset = isMobile ? 50 : 0;
+            // Mobile: Zoom 1.1 for clear text. Desktop: 1.5
+            const zoomLevel = isMobile ? 1.1 : 1.5;
 
             setCenter(targetNode.position.x, targetNode.position.y + yOffset, { zoom: zoomLevel, duration: 800 });
         } else {
-            // Add padding to fitView to prevent top nav overlap (0.2 = 20% padding)
-            if (section === 'home') fitView({ duration: 800, padding: 0.2 });
+            // Home / Default Logic
+            if (section === 'home') {
+                if (isMobile) {
+                    setCenter(0, 0, { zoom: 0.85, duration: 800 });
+                } else {
+                    fitView({ duration: 800, padding: 0.2 });
+                }
+            }
         }
     };
 
