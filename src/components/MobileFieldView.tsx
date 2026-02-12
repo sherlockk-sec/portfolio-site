@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Terminal, Server, Shield, Wifi,
     ChevronDown, ChevronUp, Lock, Zap,
-    LayoutGrid, User, Briefcase, FileCode
+    User, Briefcase, FileCode
 } from 'lucide-react';
 
 // --- Data Constants (Duplicated from Desktop for Isolation) ---
@@ -80,13 +80,6 @@ const MobileFieldView: React.FC = () => {
         setExpandedCard(expandedCard === id ? null : id);
     };
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
     return (
         <div className="min-h-screen bg-slate-950 text-cyan-400 font-mono pb-20 overflow-x-hidden selection:bg-cyan-900 selection:text-white">
 
@@ -122,10 +115,7 @@ const MobileFieldView: React.FC = () => {
                         </div>
                         <div className="bg-slate-900/50 border border-cyan-500/30 p-4 rounded-sm hover:border-cyan-400 transition-colors">
                             <h1 className="text-xl font-bold text-white mb-1">KARTHIKEYAN S</h1>
-                            <p className="text-xs text-cyan-500 mb-3 tracking-wider">CYBERSECURITY ANALYST // RED TEAMER</p>
-                            <div className="text-xs text-slate-400 leading-relaxed border-l-2 border-cyan-800 pl-3">
-                                "Sacrificed a comfortable present to force a more powerful future."
-                            </div>
+                            <p className="text-xs text-cyan-500 mb-0 tracking-wider">CYBERSECURITY ENTHUSIAST // RED TEAMER</p>
                         </div>
                     </div>
 
@@ -140,9 +130,9 @@ const MobileFieldView: React.FC = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-cyan-600 mb-1">HOP 01: EDUCATION</div>
+                                    <div className="text-xs text-cyan-600 mb-1">EDUCATION</div>
                                     <h3 className="font-bold text-cyan-100">{EDUCATION_DATA.title}</h3>
-                                    <div className="text-xs text-slate-400">{EDUCATION_DATA.subtitle}</div>
+                                    <div className="text-xs text-slate-400">Int {EDUCATION_DATA.subtitle}</div>
                                 </div>
                                 {expandedCard === 'edu' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
@@ -167,7 +157,7 @@ const MobileFieldView: React.FC = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-cyan-600 mb-1">HOP 02: EXPERIENCE</div>
+                                    <div className="text-xs text-cyan-600 mb-1">EXPERIENCE</div>
                                     <h3 className="font-bold text-cyan-100">{EXPERIENCE_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{EXPERIENCE_DATA.subtitle}</div>
                                 </div>
@@ -194,7 +184,7 @@ const MobileFieldView: React.FC = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-cyan-600 mb-1">HOP 03: PROJECTS</div>
+                                    <div className="text-xs text-cyan-600 mb-1">PROJECTS</div>
                                     <h3 className="font-bold text-cyan-100">{PROJECT_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{PROJECT_DATA.subtitle}</div>
                                 </div>
@@ -219,7 +209,7 @@ const MobileFieldView: React.FC = () => {
                         >
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <div className="text-xs text-cyan-600 mb-1">TARGET: CERTIFIED</div>
+                                    <div className="text-xs text-cyan-600 mb-1">CERTIFIED</div>
                                     <h3 className="font-bold text-cyan-100">{CERT_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{CERT_DATA.subtitle}</div>
                                 </div>
@@ -233,49 +223,33 @@ const MobileFieldView: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* SKILLS GRID (Docker Swarm Style) */}
-                    <div id="skills" className="pt-6 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                        <div className="flex items-center gap-2 mb-4">
-                            <LayoutGrid size={16} className="text-cyan-500" />
-                            <h2 className="text-sm font-bold text-cyan-100 tracking-widest">ACTIVE_SERVICES (SKILLS)</h2>
+                    {/* SKILLS LIST (Simplified) */}
+                    <div id="skills" className="pt-4 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                        <div className="flex items-center gap-2 mb-3">
+                            <span className="text-xs font-bold text-cyan-100 tracking-widest">ACTIVE_SERVICES</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-wrap gap-2">
                             {SKILLS_DATA.map((skill, idx) => (
-                                <div key={idx} className="bg-slate-900/80 border border-cyan-900/50 p-3 rounded flex flex-col gap-2 hover:border-cyan-500/50 transition-colors">
-                                    <div className="flex justify-between items-start">
-                                        <skill.icon size={18} className="text-cyan-400" />
-                                        <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_#22c55e]"></div>
-                                    </div>
-                                    <div>
-                                        <div className="text-xs font-bold text-slate-200">{skill.name}</div>
-                                        <div className="text-[10px] text-cyan-600 tracking-wider">[{skill.status}]</div>
-                                    </div>
+                                <div key={idx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded text-[11px] text-cyan-400 font-mono">
+                                    {skill.name}
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                </div>
-            </div>
+                    {/* DOWNLOAD RESUME - Bottom Scroll */}
+                    <div className="pt-8 pb-4 flex justify-center animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                        <a
+                            href="/Karthikeyan_Cybersecurity_Resume.pdf"
+                            download
+                            className="flex items-center gap-2 bg-cyan-900/20 border border-cyan-500/50 px-6 py-3 rounded text-cyan-400 hover:bg-cyan-900/40 hover:text-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                        >
+                            <Briefcase size={16} />
+                            <span className="text-xs font-bold tracking-widest">DOWNLOAD RESUME</span>
+                        </a>
+                    </div>
 
-            {/* --- BOTTOM NAVIGATION (App Bar) --- */}
-            <div className="fixed bottom-0 left-0 right-0 bg-slate-950 border-t border-cyan-900 p-2 z-50 flex justify-around items-center">
-                <button onClick={() => scrollToSection('home')} className="flex flex-col items-center gap-1 p-2 text-cyan-500 hover:text-cyan-300 transition-colors">
-                    <User size={18} />
-                    <span className="text-[9px] tracking-wide">IDENTITY</span>
-                </button>
-                <button onClick={() => scrollToSection('exp')} className="flex flex-col items-center gap-1 p-2 text-cyan-700 hover:text-cyan-300 transition-colors">
-                    <Zap size={18} />
-                    <span className="text-[9px] tracking-wide">TRACE</span>
-                </button>
-                <button onClick={() => scrollToSection('skills')} className="flex flex-col items-center gap-1 p-2 text-cyan-700 hover:text-cyan-300 transition-colors">
-                    <LayoutGrid size={18} />
-                    <span className="text-[9px] tracking-wide">GRID</span>
-                </button>
-                <a href="/Karthikeyan_Cybersecurity_Resume.pdf" download className="flex flex-col items-center gap-1 p-2 text-cyan-700 hover:text-cyan-300 transition-colors">
-                    <Briefcase size={18} />
-                    <span className="text-[9px] tracking-wide">RESUME</span>
-                </a>
+                </div>
             </div>
 
         </div>
