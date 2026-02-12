@@ -8,8 +8,9 @@ import {
 // --- Data Constants (Duplicated from Desktop for Isolation) ---
 const EDUCATION_DATA = {
     title: 'VIT Bhopal',
-    subtitle: 'Integrated M.Tech Computer Science with specialization in Cybersecurity',
+    subtitle: 'M.Tech CSE',
     details: [
+        'Integrated M.Tech Computer Science with specialization in Cybersecurity',
         'CGPA: 7.09/10.0',
         '-----------------',
         'Coursework:',
@@ -22,7 +23,7 @@ const EDUCATION_DATA = {
 const EXPERIENCE_DATA = {
     title: 'Tevel Cyber Corps',
     subtitle: 'Cybersecurity Intern',
-    location: 'Location: Chennai',
+    // Location removed from outer view
     details: [
         'Role: Intern (Oct 25 - Jan 26)',
         'Location: Chennai',
@@ -154,13 +155,14 @@ const MobileFieldView: React.FC = () => {
             <div className="px-4 py-6">
 
                 {/* --- TIMELINE SECTION (Identity -> Certs) --- */}
-                <div className="relative space-y-8 pb-8">
-
-                    {/* Vertical Dotted Line */}
-                    <div className="absolute left-[11px] top-10 bottom-6 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
+                {/* Removed space-y-8 to allow contiguous line segments */}
+                <div className="relative pb-4">
 
                     {/* IDENTITY NODE (Intro) */}
-                    <div id="home" className="relative pl-8 animate-fade-in-up">
+                    <div id="home" className="relative pl-8 pb-8 animate-fade-in-up">
+                        {/* Line: Starts from Icon Center (top-4) to Bottom */}
+                        <div className="absolute left-[11px] top-4 bottom-0 w-0.5 bg-cyan-900/40 border-l mb-1 border-dashed border-cyan-500/50"></div>
+
                         <div className="absolute left-0 top-1 w-6 h-6 bg-slate-900 border border-cyan-500 rounded-full flex items-center justify-center z-10 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                             <User size={12} className="text-cyan-400" />
                         </div>
@@ -171,7 +173,10 @@ const MobileFieldView: React.FC = () => {
                     </div>
 
                     {/* EDUCATION CARD */}
-                    <div id="exp" className="relative pl-8 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                    <div id="exp" className="relative pl-8 pb-8 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                        {/* Line: Starts from Top to Bottom (Connecting from previous) */}
+                        <div className="absolute left-[11px] top-0 bottom-0 w-0.5 bg-cyan-900/40 border-l border-dashed border-cyan-500/50"></div>
+
                         <div className="absolute left-0 top-1 w-6 h-6 bg-slate-900 border border-cyan-700 rounded-full flex items-center justify-center z-10">
                             <Briefcase size={12} className="text-cyan-600" />
                         </div>
@@ -183,12 +188,11 @@ const MobileFieldView: React.FC = () => {
                                 <div>
                                     <div className="text-xs text-cyan-600 mb-1">EDUCATION</div>
                                     <h3 className="font-bold text-cyan-100">{EDUCATION_DATA.title}</h3>
-                                    <div className="text-xs text-slate-400 leading-tight mt-1">{EDUCATION_DATA.subtitle}</div>
+                                    <div className="text-xs text-slate-400 leading-tight mt-1">Int {EDUCATION_DATA.subtitle}</div>
                                 </div>
                                 {expandedCard === 'edu' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
 
-                            {/* Accordion Content */}
                             <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 'edu' ? 'max-h-48 mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
                                 <div className="p-3 bg-black/40 rounded border border-cyan-900/50 font-mono text-[11px] text-green-400/90 leading-relaxed whitespace-pre-line shadow-inner">
                                     {EDUCATION_DATA.details.join('\n')}
@@ -198,7 +202,10 @@ const MobileFieldView: React.FC = () => {
                     </div>
 
                     {/* EXPERIENCE CARD */}
-                    <div className="relative pl-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                    <div className="relative pl-8 pb-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                        {/* Line: Starts from Top to Bottom */}
+                        <div className="absolute left-[11px] top-0 bottom-0 w-0.5 bg-cyan-900/40 border-l border-dashed border-cyan-500/50"></div>
+
                         <div className="absolute left-0 top-1 w-6 h-6 bg-slate-900 border border-cyan-700 rounded-full flex items-center justify-center z-10">
                             <Shield size={12} className="text-cyan-600" />
                         </div>
@@ -211,12 +218,10 @@ const MobileFieldView: React.FC = () => {
                                     <div className="text-xs text-cyan-600 mb-1">EXPERIENCE</div>
                                     <h3 className="font-bold text-cyan-100">{EXPERIENCE_DATA.title}</h3>
                                     <div className="text-xs text-slate-400">{EXPERIENCE_DATA.subtitle}</div>
-                                    <div className="text-[10px] text-cyan-700 mt-0.5">{EXPERIENCE_DATA.location}</div>
                                 </div>
                                 {expandedCard === 'work' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                             </div>
 
-                            {/* Accordion Content */}
                             <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 'work' ? 'max-h-48 mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
                                 <div className="p-3 bg-black/40 rounded border border-cyan-900/50 font-mono text-[11px] text-green-400/90 leading-relaxed whitespace-pre-line shadow-inner">
                                     {EXPERIENCE_DATA.details.join('\n')}
@@ -226,7 +231,10 @@ const MobileFieldView: React.FC = () => {
                     </div>
 
                     {/* PROJECTS CARD */}
-                    <div className="relative pl-8 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                    <div className="relative pl-8 pb-8 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                        {/* Line: Starts from Top to Bottom */}
+                        <div className="absolute left-[11px] top-0 bottom-0 w-0.5 bg-cyan-900/40 border-l border-dashed border-cyan-500/50"></div>
+
                         <div className="absolute left-0 top-1 w-6 h-6 bg-slate-900 border border-cyan-700 rounded-full flex items-center justify-center z-10">
                             <Server size={12} className="text-cyan-600" />
                         </div>
@@ -250,8 +258,11 @@ const MobileFieldView: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* CERTIFICATIONS */}
+                    {/* CERTIFICATIONS (Last Node) */}
                     <div className="relative pl-8 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                        {/* Line: Starts from Top to Icon Center (h-4 = 16px) */}
+                        <div className="absolute left-[11px] top-0 h-4 w-0.5 bg-cyan-900/40 border-l border-dashed border-cyan-500/50"></div>
+
                         <div className="absolute left-0 top-1 w-6 h-6 bg-slate-900 border border-cyan-700 rounded-full flex items-center justify-center z-10">
                             <AwardIcon size={12} className="text-cyan-600" />
                         </div>
@@ -278,12 +289,12 @@ const MobileFieldView: React.FC = () => {
                 </div>
 
                 {/* --- FOOTER SECTION --- */}
-                <div className="space-y-8">
+                {/* Added mt-8 to separate from the list */}
+                <div className="space-y-8 mt-8">
 
                     {/* SKILLS LIST (Categorized) */}
                     <div id="skills" className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
                         <div className="flex items-center gap-2 mb-6">
-                            {/* Styling Update: Bigger text, no underscore, clean underline */}
                             <span className="text-lg font-bold text-cyan-100 uppercase border-b-2 border-cyan-500/50 pb-1 w-full tracking-wider">SKILLS DATABASE</span>
                         </div>
 
