@@ -10,7 +10,7 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
         <>
             {/* Navigation Bar - Responsive */}
             {/* Mobile: Horizontal Bottom Bar. Desktop: Vertical Left Sidebar */}
-            <div className="fixed bottom-4 left-4 right-4 md:static md:absolute md:top-4 md:left-4 md:right-auto md:w-auto z-50 flex md:flex-col items-center md:items-start gap-4 bg-blueprint-bg/90 backdrop-blur-md border border-blueprint-border p-3 md:p-4 rounded-xl md:rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-x-auto whitespace-nowrap scrollbar-hide justify-between md:justify-start">
+            <div className="fixed bottom-4 left-4 right-4 md:absolute md:top-4 md:left-4 md:right-auto md:bottom-auto md:w-auto z-50 flex md:flex-col items-center md:items-start gap-4 bg-blueprint-bg/90 backdrop-blur-md border border-blueprint-border p-3 md:p-4 rounded-xl md:rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] overflow-x-auto whitespace-nowrap scrollbar-hide justify-between md:justify-start">
                 <button onClick={() => onNavigate('home')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors md:w-full text-left">ROOT</button>
                 <span className="text-blue-800 h-4 w-[1px] md:w-full md:h-[1px] bg-blue-900/50"></span>
                 <button onClick={() => onNavigate('experience')} className="text-xs md:text-sm font-mono text-blueprint-text hover:text-white transition-colors md:w-full text-left">EXP</button>

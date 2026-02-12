@@ -431,7 +431,7 @@ const BlueprintCanvas: React.FC = () => {
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 fitView
-                fitViewOptions={{ padding: window.innerWidth < 768 ? 0.2 : 0.4 }}
+                fitViewOptions={{ padding: window.innerWidth < 768 ? 0.1 : 0.2 }}
                 className="blueprint-cursor"
                 defaultEdgeOptions={{ type: 'data' }}
                 connectionLineStyle={{ stroke: '#64ffda' }}
