@@ -28,7 +28,7 @@ const NavigationOverlay: React.FC<NavigationOverlayProps> = ({ onNavigate }) => 
                 className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-blueprint-bg/80 backdrop-blur-md border border-blueprint-border px-4 py-2 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] text-blueprint-text hover:text-white hover:bg-blue-900/30 transition-all group"
             >
                 <Download size={16} className="group-hover:animate-bounce" />
-                <span className="text-sm font-bold font-mono tracking-wider">GET INTEL (RESUME)</span>
+                <span className="text-sm font-bold font-mono tracking-wider">DOWNLOAD RESUME</span>
             </a>
 
             {/* Gambit Quote - Compact Version */}
