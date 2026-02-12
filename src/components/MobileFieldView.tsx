@@ -139,7 +139,7 @@ const MobileFieldView: React.FC = () => {
             <div className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-cyan-800/50 px-4 py-2 flex justify-between items-center shadow-lg shadow-cyan-900/20">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-xs font-bold tracking-widest text-cyan-100">SEC_OPS_TERMINAL_v1</span>
+                    <span className="text-xs font-bold tracking-widest text-cyan-100">A Thinker's Lair</span>
                 </div>
                 <div className="text-[10px] text-cyan-600">{currentTime}</div>
             </div>
