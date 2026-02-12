@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Terminal, Server, Shield, Wifi,
     ChevronDown, ChevronUp, Lock, Zap,
-    User, Briefcase, FileCode
+    User, Briefcase, FileCode, Globe, Search, Fingerprint
 } from 'lucide-react';
 
 // --- Data Constants (Duplicated from Desktop for Isolation) ---
@@ -58,21 +58,63 @@ const CERT_DATA = {
     ]
 };
 
-// Expanded Skills List (Matching Desktop)
-const SKILLS_DATA = [
-    { name: 'Burp Suite', status: 'ONLINE', icon: Zap },
-    { name: 'Wazuh', status: 'ACTIVE', icon: Shield },
-    { name: 'Python', status: 'READY', icon: FileCode },
-    { name: 'Docker', status: 'RUNNING', icon: Server },
-    { name: 'Linux', status: 'ROOT', icon: Terminal },
-    { name: 'n8n', status: 'SYNCED', icon: Wifi },
-    { name: 'Metasploit', status: 'READY', icon: Shield },
-    { name: 'Wireshark', status: 'ACTIVE', icon: Wifi },
-    { name: 'Bash', status: 'ROOT', icon: Terminal },
-    { name: 'Proxmox', status: 'RUNNING', icon: Server },
-    { name: 'Active Dir', status: 'SYNCED', icon: User },
-    { name: 'Nmap', status: 'READY', icon: Zap },
-    { name: 'Git', status: 'SYNCED', icon: FileCode },
+// Grouped Skills Data
+const SKILLS_CATEGORIES = [
+    {
+        title: 'VAPT & SECURITY',
+        skills: [
+            { name: 'Burp Suite', icon: Zap },
+            { name: 'Nmap', icon: Wifi },
+            { name: 'Nessus', icon: Search },
+            { name: 'Metasploit', icon: Shield },
+            { name: 'Bloodhound', icon: Globe },
+            { name: 'Wireshark', icon: Wifi },
+        ]
+    },
+    {
+        title: 'SOC & OPERATIONS',
+        skills: [
+            { name: 'Wazuh SIEM', icon: Shield },
+            { name: 'Incident Response', icon: FileCode },
+            { name: 'RCA', icon: Search },
+        ]
+    },
+    {
+        title: 'AUTOMATION & SCRIPTING',
+        skills: [
+            { name: 'n8n', icon: Wifi },
+            { name: 'Python', icon: FileCode },
+            { name: 'Bash', icon: Terminal },
+        ]
+    },
+    {
+        title: 'INFRASTRUCTURE',
+        skills: [
+            { name: 'Active Directory', icon: User },
+            { name: 'Proxmox VE', icon: Server },
+            { name: 'Fortinet', icon: Shield },
+            { name: 'Docker', icon: Server },
+            { name: 'Linux', icon: Terminal },
+            { name: 'Windows Server', icon: Server },
+        ]
+    },
+    {
+        title: 'FORENSICS',
+        skills: [
+            { name: 'Maltego', icon: Search },
+            { name: 'OSINT', icon: Globe },
+            { name: 'Digital Forensics', icon: Fingerprint },
+            { name: 'Autopsy', icon: FileCode },
+        ]
+    },
+    {
+        title: 'LANGUAGES',
+        skills: [
+            { name: 'English', icon: Globe },
+            { name: 'Tamil', icon: User },
+            { name: 'Japanese', icon: Globe },
+        ]
+    }
 ];
 
 const MobileFieldView: React.FC = () => {
@@ -111,12 +153,31 @@ const MobileFieldView: React.FC = () => {
             <div className="px-4 py-6">
 
                 {/* --- TIMELINE SECTION (Identity -> Certs) --- */}
-                {/* Wrap these in a generic div with relative positioning so the line stays within this block */}
                 <div className="relative space-y-8 pb-8">
 
                     {/* Vertical Dotted Line */}
-                    {/* Runs from Top 10px to Bottom 20px of this specific container */}
-                    <div className="absolute left-[27px] top-10 bottom-6 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
+                    {/* 
+                        Align Fix: 
+                        Padding of Container = px-4 (16px)
+                        Icon Container Width = w-6 (24px)
+                        Center of Icon = 12px from left edge of content area.
+                        
+                        Line Calculation:
+                        Container Padding Left = 16px
+                        Half Icon Width = 12px
+                        Total Left Offset = 16px + 12px - 1px (half border width) = 27px
+                        
+                        Wait, standard padding is 1rem (16px).
+                        Relative container 'pl-8' on items creates space.
+                        Let's re-verify alignment. 
+                        Icons are absolute at left-0 inside 'relative pl-8'.
+                        So Icons are at 0px relative to the item container.
+                        The item container has 'pl-8' (32px padding).
+                        The line should be centered on the icon.
+                        Icon width is w-6 (24px). Center is 12px.
+                        So line should be at left-[11px] (12px - 1px border).
+                    */}
+                    <div className="absolute left-[11px] top-10 bottom-6 w-0.5 bg-gradient-to-b from-cyan-500/0 via-cyan-500/50 to-cyan-500/0 border-l border-dashed border-cyan-700/50"></div>
 
                     {/* IDENTITY NODE (Intro) */}
                     <div id="home" className="relative pl-8 animate-fade-in-up">
@@ -235,19 +296,27 @@ const MobileFieldView: React.FC = () => {
 
                 </div>
 
-                {/* --- FOOTER SECTION (Skills -> Resume -> Quote) --- */}
-                {/* No vertical line here */}
+                {/* --- FOOTER SECTION --- */}
                 <div className="space-y-8">
 
-                    {/* SKILLS LIST (Expanded & Renamed) */}
+                    {/* SKILLS LIST (Categorized) */}
                     <div id="skills" className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
-                        <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xs font-bold text-cyan-100 tracking-widest uppercase">SKILLS</span>
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="text-xs font-bold text-cyan-100 tracking-widest uppercase border-b border-cyan-500/30 pb-1 w-full">SKILLS_DATABASE</span>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                            {SKILLS_DATA.map((skill, idx) => (
-                                <div key={idx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded text-[11px] text-cyan-400 font-mono hover:border-cyan-500/50 transition-colors cursor-default">
-                                    {skill.name}
+
+                        <div className="space-y-6">
+                            {SKILLS_CATEGORIES.map((category, idx) => (
+                                <div key={idx} className="space-y-2">
+                                    <h4 className="text-[10px] text-cyan-500 font-bold tracking-wider uppercase ml-1 opacity-80">{category.title}</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {category.skills.map((skill, sIdx) => (
+                                            <div key={sIdx} className="bg-slate-900/50 border border-cyan-900/50 px-3 py-1.5 rounded flex items-center gap-2 hover:border-cyan-500/50 transition-colors cursor-default">
+                                                <skill.icon size={10} className="text-cyan-600" />
+                                                <span className="text-[11px] text-cyan-400 font-mono">{skill.name}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             ))}
                         </div>
